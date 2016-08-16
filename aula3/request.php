@@ -1,4 +1,5 @@
-ass Request{
+<?php
+class Request{
         private $method;
         private $protocol;
         private $server_ip;
