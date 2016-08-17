@@ -66,6 +66,4 @@ class Request{
         }
 
 }
-$request = new Request("http","127.0.0.1/8","127.0.0.1/9","resource/jpgermano",array("pesquisa1","pesquisa2","pesquisa3"),"GET");
-echo $request->toString();
                                   
