@@ -7,13 +7,13 @@ class Request{
         private $resource;
         private $params;
 
-        public function __construct($protocol, $server_ip, $remote_ip, $resource, $params, $method){
-                $this->protocol = $protocol;
+        public function __construct($method, $protocol, $server_ip, $remote_ip, $resource, $params){
+                $this->method = $method;
+		$this->protocol = $protocol;
                 $this->server_ip = $server_ip;
                 $this->remote_ip= $remote_ip;
                 $this->resource = $resource;
                 $this->params = $params;
-                $this->method = $method;
         }
 
         public function toString(){
@@ -64,6 +64,5 @@ class Request{
         public function getParameters(){
                 return $method;
         }
-
 }
                                   
