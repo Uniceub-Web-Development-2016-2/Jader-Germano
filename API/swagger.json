@@ -1,0 +1,884 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "v1",
+        "title": "Auto Parking API",
+        "description": "The first version of Auto Parking Api.\n\n## Requests Objects\nAll URLs use [RESTful](http://en.wikipedia.org/wiki/Representational_state_transfer).\nEvery endpoint (URL) may support one of four different http verbs. GET\nrequests fetch information about an object, POST requests create objects,\nPUT requests update objects, and finally DELETE requests will delete\nobjects.\n"
+    },
+    "host": "localhost",
+    "basePath": "/v1",
+    "schemes": [
+        "https"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "tags": [
+        {
+            "name": "Users"
+        },
+        {
+            "name": "Establishment"
+        },
+        {
+            "name": "Relationships",
+            "description": "Relationships are expressed using the following terms:\n\n**outgoing_status**: Your relationship to the user. Can be \"follows\", \"none\".\n**incoming_status**: A user's relationship to you. Can be \"followed_by\", \"none\".\n"
+        },
+        {
+            "name": "Classification"
+        },
+        {
+            "name": "Location"
+        }
+    ],
+    "securityDefinitions": {
+        "oauth": {
+            "type": "oauth2",
+            "flow": "implicit",
+            "authorizationUrl": "https://autoparking.swagger.io/api/oauth/dialog",
+            "scopes": {
+                "basic": "to read any and all data related to a user (e.g. following/followed-by\n lists, etc.) (granted by default)\n",
+                "comments": "to create or delete comments on a establishment’s behalf",
+                "relationships": "to follow and unfollow users on a user’s behalf"
+            }
+        },
+        "key": {
+            "type": "apiKey",
+            "in": "query",
+            "name": "access_token"
+        }
+    },
+    "security": [
+        {
+            "oauth": [
+                "basic",
+                "comments",
+                "relationships"
+            ]
+        },
+        {
+            "key": []
+        }
+    ],
+    "parameters": {
+        "user-id": {
+            "name": "user-id",
+            "in": "path",
+            "description": "The user identifier number",
+            "type": "number",
+            "required": true
+        },
+        "establishment-id": {
+            "name": "establishment-id",
+            "in": "path",
+            "description": "The establishment identifier number",
+            "type": "number",
+            "required": true
+        }
+    },
+    "paths": {
+        "/users/{user-id}": {
+            "parameters": [
+                {
+                    "$ref": "#/parameters/user-id"
+                }
+            ],
+            "get": {
+                "security": [
+                    {
+                        "key": []
+                    },
+                    {
+                        "oauth": [
+                            "basic"
+                        ]
+                    }
+                ],
+                "tags": [
+                    "Users"
+                ],
+                "description": "Get basic information about a user.",
+                "responses": {
+                    "200": {
+                        "description": "The user object",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "$ref": "#/definitions/User"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid ID supplied"
+                    },
+                    "404": {
+                        "description": "User not found"
+                    },
+                    "405": {
+                        "description": "Validation exception"
+                    }
+                }
+            }
+        },
+        "/users/searchByName": {
+            "get": {
+                "security": [
+                    {
+                        "key": []
+                    },
+                    {
+                        "oauth": [
+                            "basic"
+                        ]
+                    }
+                ],
+                "tags": [
+                    "Users"
+                ],
+                "description": "Get basic information about a user.",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "username",
+                        "description": "Created user object",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The user object",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "$ref": "#/definitions/User"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid ID supplied"
+                    },
+                    "404": {
+                        "description": "User not found"
+                    },
+                    "405": {
+                        "description": "Validation exception"
+                    }
+                }
+            }
+        },
+        "/users/{user-id}/follows": {
+            "parameters": [
+                {
+                    "$ref": "#/parameters/user-id"
+                }
+            ],
+            "get": {
+                "tags": [
+                    "Relationships"
+                ],
+                "description": "Get the list of users this user follows.",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "properties": {
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/MiniProfile"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{user-id}/followed-by": {
+            "parameters": [
+                {
+                    "$ref": "#/parameters/user-id"
+                }
+            ],
+            "get": {
+                "tags": [
+                    "Relationships"
+                ],
+                "description": "Get the list of users this user is followed by.",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "properties": {
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/MiniProfile"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/register": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "description": "Registration of a new user\n",
+                "security": [
+                    {
+                        "oauth": [
+                            "basic"
+                        ]
+                    }
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Created user object",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "405": {
+                        "description": "Invalid input"
+                    }
+                }
+            }
+        },
+        "/users/{user-id}/edit": {
+            "parameters": [
+                {
+                    "$ref": "#/parameters/user-id"
+                }
+            ],
+            "put": {
+                "tags": [
+                    "Users"
+                ],
+                "description": "Edit an existing user\n",
+                "security": [
+                    {
+                        "oauth": [
+                            "basic"
+                        ]
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "405": {
+                        "description": "Validation exception"
+                    }
+                }
+            }
+        },
+        "/users/{user-id}/delete": {
+            "parameters": [
+                {
+                    "$ref": "#/parameters/user-id"
+                }
+            ],
+            "delete": {
+                "tags": [
+                    "Users"
+                ],
+                "description": "Delete an user\n",
+                "security": [
+                    {
+                        "oauth": [
+                            "basic"
+                        ]
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "405": {
+                        "description": "Validation exception"
+                    }
+                }
+            }
+        },
+        "/users/{user-id}/relationship": {
+            "parameters": [
+                {
+                    "$ref": "#/parameters/user-id"
+                }
+            ],
+            "post": {
+                "tags": [
+                    "Relationships"
+                ],
+                "description": "Modify the relationship between the current user and the target user.\n",
+                "security": [
+                    {
+                        "oauth": [
+                            "relationships"
+                        ]
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "action",
+                        "in": "body",
+                        "description": "One of follow/unfollow.",
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "follow",
+                                "unfollow"
+                            ]
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "properties": {
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/MiniProfile"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/establishment/searchByName": {
+            "get": {
+                "security": [
+                    {
+                        "key": []
+                    },
+                    {
+                        "oauth": [
+                            "basic"
+                        ]
+                    }
+                ],
+                "tags": [
+                    "Establishment"
+                ],
+                "description": "Get basic information about an establishment.",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "name",
+                        "description": "Created establishment object",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The establishment object",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "$ref": "#/definitions/Establishment"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid ID supplied"
+                    },
+                    "404": {
+                        "description": "Establishment not found"
+                    },
+                    "405": {
+                        "description": "Validation exception"
+                    }
+                }
+            }
+        },
+        "/establishment/register": {
+            "post": {
+                "tags": [
+                    "Establishment"
+                ],
+                "description": "Registration of a new establishment\n",
+                "security": [
+                    {
+                        "oauth": [
+                            "basic"
+                        ]
+                    }
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Created user object",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Establishment"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "405": {
+                        "description": "Invalid input"
+                    }
+                }
+            }
+        },
+        "/establishment/{establishment-id}/edit": {
+            "parameters": [
+                {
+                    "$ref": "#/parameters/establishment-id"
+                }
+            ],
+            "put": {
+                "tags": [
+                    "Establishment"
+                ],
+                "description": "Edition of a establishment\n",
+                "security": [
+                    {
+                        "oauth": [
+                            "basic"
+                        ]
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "405": {
+                        "description": "Validation exception"
+                    }
+                }
+            }
+        },
+        "/establishment/{establishment-id}/delete": {
+            "parameters": [
+                {
+                    "$ref": "#/parameters/establishment-id"
+                }
+            ],
+            "delete": {
+                "tags": [
+                    "Establishment"
+                ],
+                "description": "Remotion of a user\n",
+                "security": [
+                    {
+                        "oauth": [
+                            "basic"
+                        ]
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "405": {
+                        "description": "Validation exception"
+                    }
+                }
+            }
+        },
+        "/establishment/{establishment-id}/search": {
+            "parameters": [
+                {
+                    "$ref": "#/parameters/establishment-id"
+                }
+            ],
+            "get": {
+                "tags": [
+                    "Establishment"
+                ],
+                "description": "Search for a establishment by name.",
+                "parameters": [
+                    {
+                        "name": "comments",
+                        "in": "query",
+                        "description": "List of comments leaved by users.",
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/Establishment"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid ID supplied"
+                    },
+                    "404": {
+                        "description": "Establishment not found"
+                    },
+                    "405": {
+                        "description": "Validation exception"
+                    }
+                }
+            }
+        },
+        "/establishment/{establishment-id}/location": {
+            "parameters": [
+                {
+                    "$ref": "#/parameters/establishment-id"
+                }
+            ],
+            "get": {
+                "tags": [
+                    "Location",
+                    "Establishment"
+                ],
+                "description": "Search for a location by geographic coordinate.",
+                "parameters": [
+                    {
+                        "name": "distance",
+                        "in": "query",
+                        "description": "Default is 1000m (distance=1000), max distance is 5000.",
+                        "type": "integer"
+                    },
+                    {
+                        "name": "lat",
+                        "in": "query",
+                        "description": "latitude of the center search coordinate. If used, lng is required.\n",
+                        "type": "number"
+                    },
+                    {
+                        "name": "lng",
+                        "in": "query",
+                        "description": "longitude of the center search coordinate. If used, lat is required.\n",
+                        "type": "number"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/Establishment"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/establishment/{establishment-id}/classification": {
+            "parameters": [
+                {
+                    "name": "establishment-id",
+                    "in": "path",
+                    "description": "Establishment ID",
+                    "type": "integer",
+                    "required": true
+                }
+            ],
+            "get": {
+                "tags": [
+                    "Classification",
+                    "Establishment"
+                ],
+                "description": "Get a list of recent comments on a establishment object.\n",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "properties": {
+                                "meta": {
+                                    "properties": {
+                                        "code": {
+                                            "type": "number"
+                                        }
+                                    }
+                                },
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/Classification"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/establishment/{establishment-id}/comments": {
+            "parameters": [
+                {
+                    "name": "establishment-id",
+                    "in": "path",
+                    "description": "Establishment ID",
+                    "type": "integer",
+                    "required": true
+                }
+            ],
+            "get": {
+                "tags": [
+                    "Comments",
+                    "Establishment"
+                ],
+                "description": "Get a list of recent comments on a establishment object.\n",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "properties": {
+                                "meta": {
+                                    "properties": {
+                                        "code": {
+                                            "type": "number"
+                                        }
+                                    }
+                                },
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/Comment"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Comments",
+                    "Establishment"
+                ],
+                "description": "Create a comment on a media object with the following rules:\n\n* The total length of the comment cannot exceed 300 characters.\n* The comment cannot contain more than 1 URL.\n* The comment cannot consist of all capital letters.\n",
+                "security": [
+                    {
+                        "oauth": [
+                            "comments"
+                        ]
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "TEXT",
+                        "description": "Text to post as a comment on the establishment object as specified in\nestablishment-id.\n",
+                        "in": "body",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "meta": {
+                                    "properties": {
+                                        "code": {
+                                            "type": "number"
+                                        }
+                                    }
+                                },
+                                "data": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Comments",
+                    "Establishment"
+                ],
+                "description": "Remove a comment on the authenticated establishment object.\n",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "meta": {
+                                    "properties": {
+                                        "code": {
+                                            "type": "number"
+                                        }
+                                    }
+                                },
+                                "data": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "User": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "username": {
+                    "type": "string"
+                },
+                "full_name": {
+                    "type": "string"
+                },
+                "profile_picture": {
+                    "type": "string"
+                },
+                "website": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "phone": {
+                    "type": "string"
+                },
+                "userStatus": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "User Status"
+                },
+                "counts": {
+                    "type": "object",
+                    "properties": {
+                        "follows": {
+                            "type": "integer"
+                        },
+                        "follwed_by": {
+                            "type": "integer"
+                        }
+                    }
+                }
+            }
+        },
+        "Establishment": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "adress": {
+                    "type": "string"
+                },
+                "totalVacancies": {
+                    "type": "integer"
+                },
+                "FreeVacancies": {
+                    "type": "integer"
+                },
+                "latitude": {
+                    "type": "number"
+                },
+                "longitude": {
+                    "type": "number"
+                }
+            }
+        },
+        "Comment": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "created_time": {
+                    "type": "string"
+                },
+                "text": {
+                    "type": "string"
+                },
+                "from": {
+                    "$ref": "#/definitions/MiniProfile"
+                }
+            }
+        },
+        "Classification": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "record_time": {
+                    "type": "string"
+                },
+                "stars": {
+                    "type": "integer"
+                },
+                "from": {
+                    "$ref": "#/definitions/MiniProfile"
+                }
+            }
+        },
+        "MiniProfile": {
+            "type": "object",
+            "description": "A shorter version of User for search array",
+            "properties": {
+                "user_name": {
+                    "type": "string"
+                },
+                "full_name": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "profile_picture": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
