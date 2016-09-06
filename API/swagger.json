@@ -25,7 +25,7 @@
         },
         {
             "name": "Relationships",
-            "description": "Relationships are expressed using the following terms:\n\n**outgoing_status**: Your relationship to the user. Can be \"follows\", \"none\".\n**incoming_status**: A user's relationship to you. Can be \"followed_by\", \"none\".\n"
+            "description": "Relationships are expressed using the following terms:\n**outgoing_status**: Your relationship to the user. Can be \"follows\", \"none\".\n**incoming_status**: A user's relationship to you. Can be \"followed_by\", \"none\".\n"
         },
         {
             "name": "Classification"
@@ -114,13 +114,43 @@
                         }
                     },
                     "400": {
-                        "description": "Invalid ID supplied"
+                        "description": "Invalid ID supplied",
+                        "schema": {
+                            "properties": {
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/errorModel"
+                                    }
+                                }
+                            }
+                        }
                     },
                     "404": {
-                        "description": "User not found"
+                        "description": "User not found",
+                        "schema": {
+                            "properties": {
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/errorModel"
+                                    }
+                                }
+                            }
+                        }
                     },
                     "405": {
-                        "description": "Validation exception"
+                        "description": "Validation exception",
+                        "schema": {
+                            "properties": {
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/errorModel"
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -163,13 +193,43 @@
                         }
                     },
                     "400": {
-                        "description": "Invalid ID supplied"
+                        "description": "Invalid ID supplied",
+                        "schema": {
+                            "properties": {
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/errorModel"
+                                    }
+                                }
+                            }
+                        }
                     },
                     "404": {
-                        "description": "User not found"
+                        "description": "User not found",
+                        "schema": {
+                            "properties": {
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/errorModel"
+                                    }
+                                }
+                            }
+                        }
                     },
                     "405": {
-                        "description": "Validation exception"
+                        "description": "Validation exception",
+                        "schema": {
+                            "properties": {
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/errorModel"
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -259,7 +319,17 @@
                         "description": "Successful operation"
                     },
                     "405": {
-                        "description": "Invalid input"
+                        "description": "Invalid input",
+                        "schema": {
+                            "properties": {
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/errorModel"
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -287,7 +357,17 @@
                         "description": "Successful operation"
                     },
                     "405": {
-                        "description": "Validation exception"
+                        "description": "Validation exception",
+                        "schema": {
+                            "properties": {
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/errorModel"
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -315,7 +395,17 @@
                         "description": "Successful operation"
                     },
                     "405": {
-                        "description": "Validation exception"
+                        "description": "Validation exception",
+                        "schema": {
+                            "properties": {
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/errorModel"
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -407,13 +497,43 @@
                         }
                     },
                     "400": {
-                        "description": "Invalid ID supplied"
+                        "description": "Invalid ID supplied",
+                        "schema": {
+                            "properties": {
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/errorModel"
+                                    }
+                                }
+                            }
+                        }
                     },
                     "404": {
-                        "description": "Establishment not found"
+                        "description": "Establishment not found",
+                        "schema": {
+                            "properties": {
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/errorModel"
+                                    }
+                                }
+                            }
+                        }
                     },
                     "405": {
-                        "description": "Validation exception"
+                        "description": "Validation exception",
+                        "schema": {
+                            "properties": {
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/errorModel"
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -447,7 +567,17 @@
                         "description": "Successful operation"
                     },
                     "405": {
-                        "description": "Invalid input"
+                        "description": "Invalid input",
+                        "schema": {
+                            "properties": {
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/errorModel"
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -475,7 +605,17 @@
                         "description": "Successful operation"
                     },
                     "405": {
-                        "description": "Validation exception"
+                        "description": "Validation exception",
+                        "schema": {
+                            "properties": {
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/errorModel"
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -503,7 +643,17 @@
                         "description": "Successful operation"
                     },
                     "405": {
-                        "description": "Validation exception"
+                        "description": "Validation exception",
+                        "schema": {
+                            "properties": {
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/errorModel"
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -543,13 +693,43 @@
                         }
                     },
                     "400": {
-                        "description": "Invalid ID supplied"
+                        "description": "Invalid ID supplied",
+                        "schema": {
+                            "properties": {
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/errorModel"
+                                    }
+                                }
+                            }
+                        }
                     },
                     "404": {
-                        "description": "Establishment not found"
+                        "description": "Establishment not found",
+                        "schema": {
+                            "properties": {
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/errorModel"
+                                    }
+                                }
+                            }
+                        }
                     },
                     "405": {
-                        "description": "Validation exception"
+                        "description": "Validation exception",
+                        "schema": {
+                            "properties": {
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/errorModel"
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -688,7 +868,7 @@
                     "Comments",
                     "Establishment"
                 ],
-                "description": "Create a comment on a media object with the following rules:\n\n* The total length of the comment cannot exceed 300 characters.\n* The comment cannot contain more than 1 URL.\n* The comment cannot consist of all capital letters.\n",
+                "description": "Create a comment on a media object with the following rules:\n* The total length of the comment cannot exceed 300 characters.\n* The comment cannot contain more than 1 URL.\n* The comment cannot consist of all capital letters.\n",
                 "security": [
                     {
                         "oauth": [
@@ -876,6 +1056,22 @@
                     "type": "integer"
                 },
                 "profile_picture": {
+                    "type": "string"
+                }
+            }
+        },
+        "errorModel": {
+            "type": "object",
+            "required": [
+                "code",
+                "message"
+            ],
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "format": "int"
+                },
+                "message": {
                     "type": "string"
                 }
             }

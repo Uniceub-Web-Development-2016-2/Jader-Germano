@@ -16,7 +16,6 @@ info:
     requests fetch information about an object, POST requests create objects,
     PUT requests update objects, and finally DELETE requests will delete
     objects.
-
  
 ################################################################################
 #                  Host, Base Path, Schemes and Content Types                  #
@@ -39,7 +38,6 @@ tags:
   - name: Relationships
     description: |
       Relationships are expressed using the following terms:
-
       **outgoing_status**: Your relationship to the user. Can be "follows", "none".
       **incoming_status**: A user's relationship to you. Can be "followed_by", "none".
   - name: Classification
@@ -108,10 +106,28 @@ paths:
       responses:
         405:
           description: Validation exception
+          schema:
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/definitions/errorModel'
         404:
           description: User not found
+          schema:
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/definitions/errorModel'
         400:
           description: Invalid ID supplied
+          schema:
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/definitions/errorModel'
         200:
           description: The user object
           schema:
@@ -141,10 +157,28 @@ paths:
       responses:
         405:
           description: Validation exception
+          schema:
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/definitions/errorModel'
         404:
           description: User not found
+          schema:
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/definitions/errorModel'
         400:
           description: Invalid ID supplied
+          schema:
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/definitions/errorModel'
         200:
           description: The user object
           schema:
@@ -207,6 +241,12 @@ paths:
       responses:
         405:
           description: Invalid input
+          schema:
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/definitions/errorModel'
         200:
           description: Successful operation
           
@@ -225,6 +265,12 @@ paths:
       responses:
         405:
           description: Validation exception
+          schema:
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/definitions/errorModel'
         200:
           description: Successful operation
           
@@ -243,6 +289,12 @@ paths:
       responses:
         405:
           description: Validation exception
+          schema:
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/definitions/errorModel'
         200:
           description: Successful operation
           
@@ -299,10 +351,28 @@ paths:
       responses:
         405:
           description: Validation exception
+          schema:
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/definitions/errorModel'
         404:
           description: Establishment not found
+          schema:
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/definitions/errorModel'
         400:
           description: Invalid ID supplied
+          schema:
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/definitions/errorModel'
         200:
           description: The establishment object
           schema:
@@ -330,6 +400,12 @@ paths:
       responses:
         405:
           description: Invalid input
+          schema:
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/definitions/errorModel'
         200:
           description: Successful operation
           
@@ -348,6 +424,12 @@ paths:
       responses:
         405:
           description: Validation exception
+          schema:
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/definitions/errorModel'
         200:
           description: Successful operation
         
@@ -367,6 +449,12 @@ paths:
       responses:
         405:
           description: Validation exception
+          schema:
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/definitions/errorModel'
         200:
           description: Successful operation  
           
@@ -386,10 +474,28 @@ paths:
       responses:
         405:
           description: Validation exception
+          schema:
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/definitions/errorModel'
         404:
           description: Establishment not found
+          schema:
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/definitions/errorModel'
         400:
           description: Invalid ID supplied
+          schema:
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/definitions/errorModel'
         200:
           description: OK
           schema:
@@ -494,7 +600,6 @@ paths:
         - Establishment
       description: |
         Create a comment on a media object with the following rules:
-
         * The total length of the comment cannot exceed 300 characters.
         * The comment cannot contain more than 1 URL.
         * The comment cannot consist of all capital letters.
@@ -632,4 +737,14 @@ definitions:
         type: integer
       profile_picture:
         type: string
-
+  errorModel:
+    type: object
+    required:
+      - code
+      - message
+    properties:
+      code:
+        type: integer
+        format: int
+      message:
+        type: string
