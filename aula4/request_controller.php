@@ -9,7 +9,7 @@ class RequestController
 		{
 			return array("code" => "405", "message" => "method not allowed");
 		}	
-		if(!self::is_valid_protocol(substr($request_info['SERVER_PROTOCOL'],0, -4)))
+		if(!self::is_valid_protocol($request_info['SERVER_PROTOCOL']))
 		{
 			return array("code" => "406", "message" => "protocol not allowed");
 		}
