@@ -2,7 +2,9 @@
 include ('resource_controller.php');
 include_once('request.php');
 class RequestController{
+
 	const VALID_METHODS = array('GET', 'POST', 'PUT', 'DELETE');
+	const VALID_PROTOCOL = array('HTTP/1.1', 'HTTPS/1.1', 'HTTP/1.0',' HTTPS/1.0');
 	private function create_request($request_info){
 		if(!self::is_valid_method($request_info['REQUEST_METHOD'])){
 			return array("code" => "405", "message" => "method not allowed");
@@ -37,7 +39,7 @@ class RequestController{
 	}
 
 	public function is_valid_client_addr($client_addr){
-		if(is_null($remote_address) || filter_var($remote_address, FILTER_VALIDATE_IP) === FALSE){
+		if(is_null($client_addr) || filter_var($client_addr, FILTER_VALIDATE_IP) === FALSE){
             return false;
 		}
 		return true;
