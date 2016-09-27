@@ -6,19 +6,19 @@ class Request{
         private $remote_ip;
         private $resource;
         private $params;
-		private $body;
+    private $body;
   
-	 public function __construct($method, $protocol, $serverAddress, $clientAddress, $path, $queryString, $body)
+     public function __construct($method, $protocol, $serverAddress, $clientAddress, $path, $queryString, $body)
     {
         $this->method = $method;
         $this->protocol = $protocol;
         $this->server_ip = $serverAddress;
         $this->remote_ip = $clientAddress;
-        $this->resource = $path;
+        $this->setResource($path);
         $this->setParams($queryString);
         $this->body = $body;
     }
-		 
+         
         public function toString(){
                 $request = "";
                 $Inc = 1;
@@ -53,16 +53,19 @@ class Request{
                 return $this->remote_ip;
         }
         public function setResource($resource){
-                $this->resource = $resource;
-        }
+            $s = explode("?", $resource);
+        $r = explode("/", $s[0]);
+        $this->resource = $r[2];        
+    }
         public function getResource(){
                 return $this->resource;
         }
-		public function setParams($paramsString)
-    	{
-        	parse_str($paramsString, $paramsArray);
-       		 $this->params = $paramsArray;
-    	}	
+        
+    public function setParams($paramsString)
+        {
+            parse_str($paramsString, $paramsArray);
+             $this->params = $paramsArray;
+        }   
         public function getParameters(){
                 return $this->params;
         }
