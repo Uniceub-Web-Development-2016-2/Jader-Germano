@@ -14,7 +14,7 @@ class ResourceController
 		if($request->getParameters() != null){
 			$query.=' WHERE '.self::queryParams($request->getParameters());
 		}
-			var_dump($query);
+		//	var_dump($query);
 		return self::select($query);  
 	}
 
