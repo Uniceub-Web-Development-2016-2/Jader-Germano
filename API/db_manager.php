@@ -19,5 +19,4 @@ class DBConnector extends PDO {
     }   
         
 }
-//$result = (new DBConnector())->query($search);
-//var_dump($result->fetchAll());
+

@@ -11,14 +11,20 @@ $controller = new RequestController();
  
     return $array;
 	}
+	
 	$arr = utf8_converter($controller->execute());
-
+//function resultQuery($arr){
 	if (count($arr) > 0) {
+//		$result="";
 		foreach($arr as $item) { 
-	    	echo 'ID: '.$item['ID_USER'].'<br>Nome: '.$item['FN_FULL_NAME_USER'].'<br>'; 
+// $result.= 
+	    	echo 'ID: '.$item['ID_USER'].'<br>Nome: '.$item['FN_FULL_NAME_USER'].'<br>'.'E-mail: '.$item['EA_EMAIL_ADRESS_USER'].'<br>'.' Data de Nasc.: '.$item['BI_BIRTHDATE'].'<br>'.'Celular: '.$item['PH_PHONE_USER'].'<br><br>';
 		}
+//		return $result;
 	} else {
-		echo '<br> Usuario nao encontrado!. <br>';
+//		return 
+		echo '<br> Pesquisa nao retornou nenhum resultado. <br>';
 	}
-
-	//echo json_encode(utf8_converter($controller->execute()));
+//}
+// echo json_encode(resultQuery(utf8_converter($controller->execute())));
+	

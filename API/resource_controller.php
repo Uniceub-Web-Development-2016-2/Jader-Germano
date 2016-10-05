@@ -10,12 +10,11 @@ class ResourceController
 	
 	}
 	private function search($request) {
-		$var = strtok($request->getResource(), '?');
-		$query = 'SELECT * FROM '.str_replace("/","",$var);
+		$query = 'SELECT * FROM '.$request->getResource();
 		if($request->getParameters() != null){
 			$query.=' WHERE '.self::queryParams($request->getParameters());
 		}
-		//var_dump(self::select($query));
+			var_dump($query);
 		return self::select($query);  
 	}
 
@@ -28,8 +27,23 @@ class ResourceController
 	private function queryParams($params) {
 		$query = "";		
 		foreach($params as $key => $value) {
-			$query .= $key." = '".$value."'"." AND ";	
+			$query .= $key;
+			if(is_numeric($value)){
+				$query .=" = '".$value."'"." AND ";
+			}else{
+				$query .=" LIKE '%".$value."%'"." AND ";
+			}
 		}
+		$query = substr($query,0,-5);
+		return $query;
+	}
+
+	private function queryParamsByString($params) {
+		$query = "";		
+		foreach($params as $key => $value) {
+			$query .= $key." = '%".$value."%'"." AND ";	
+		}
+		var_dump(substr($query,0,-5));
 		$query = substr($query,0,-5);
 		return $query;
 	}
