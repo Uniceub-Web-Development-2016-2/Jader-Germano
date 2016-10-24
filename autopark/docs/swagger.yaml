@@ -1,0 +1,750 @@
+---
+swagger: '2.0'
+
+################################################################################
+#                              API Information                                 #
+################################################################################
+info:
+  version: v1
+  title: Auto Parking API
+  description: |
+    The first version of Auto Parking Api.
+   
+    ## Requests Objects
+    All URLs use [RESTful](http://en.wikipedia.org/wiki/Representational_state_transfer).
+    Every endpoint (URL) may support one of four different http verbs. GET
+    requests fetch information about an object, POST requests create objects,
+    PUT requests update objects, and finally DELETE requests will delete
+    objects.
+ 
+################################################################################
+#                  Host, Base Path, Schemes and Content Types                  #
+################################################################################
+host: localhost
+basePath: /v1
+schemes:
+  - https
+produces:
+  - application/json
+consumes:
+  - application/json
+
+################################################################################
+#                                   Tags                                       #
+################################################################################
+tags:
+  - name: Users
+  - name: Establishment
+  - name: Relationships
+    description: |
+      Relationships are expressed using the following terms:
+      **outgoing_status**: Your relationship to the user. Can be "follows", "none".
+      **incoming_status**: A user's relationship to you. Can be "followed_by", "none".
+  - name: Classification
+  - name: Location
+
+################################################################################
+#                                  Security                                    #
+################################################################################
+securityDefinitions:
+  oauth:
+    type: oauth2
+    flow: implicit
+    authorizationUrl: https://autoparking.swagger.io/api/oauth/dialog
+    scopes:
+      basic: |
+       to read any and all data related to a user (e.g. following/followed-by
+        lists, etc.) (granted by default)
+      comments: to create or delete comments on a establishment’s behalf
+      relationships: to follow and unfollow users on a user’s behalf
+     
+  key:
+    type: apiKey
+    in: query
+    name: access_token
+security:
+  - oauth:
+    - basic
+    - comments
+    - relationships
+  - key: []
+
+################################################################################
+#                                   Parameters                                 #
+################################################################################
+parameters:
+  user-id:
+    name: user-id
+    in: path
+    description: The user identifier number
+    type: number
+    required: true
+    
+  establishment-id:
+    name: establishment-id
+    in: path
+    description: The establishment identifier number
+    type: number
+    required: true
+  
+
+################################################################################
+#                                           Paths                              #
+################################################################################
+paths:
+  /users/{user-id}:
+    parameters:
+      - $ref: '#/parameters/user-id'
+    get:
+      security:
+        - key: []
+        - oauth:
+          - basic
+      tags:
+        - Users
+      description: Get basic information about a user.
+      responses:
+        405:
+          description: Validation exception
+          schema:
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/definitions/errorModel'
+        404:
+          description: User not found
+          schema:
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/definitions/errorModel'
+        400:
+          description: Invalid ID supplied
+          schema:
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/definitions/errorModel'
+        200:
+          description: The user object
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/User'
+                
+  /users/searchByName:
+    
+    get:
+      security:
+        - key: []
+        - oauth:
+          - basic
+      tags:
+        - Users
+      description: Get basic information about a user.
+      parameters:
+      
+        - in: query
+          name: username
+          description: Created user object
+          required: true
+          type: string
+         
+      responses:
+        405:
+          description: Validation exception
+          schema:
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/definitions/errorModel'
+        404:
+          description: User not found
+          schema:
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/definitions/errorModel'
+        400:
+          description: Invalid ID supplied
+          schema:
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/definitions/errorModel'
+        200:
+          description: The user object
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/User'
+                
+
+  /users/{user-id}/follows:
+    parameters:
+      - $ref: '#/parameters/user-id'
+    get:
+      tags:
+        - Relationships
+      description: Get the list of users this user follows.
+      responses:
+        200:
+          description: OK
+          schema:
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/definitions/MiniProfile'
+
+  /users/{user-id}/followed-by:
+    parameters:
+      - $ref: '#/parameters/user-id'
+    get:
+      tags:
+        - Relationships
+      description: Get the list of users this user is followed by.
+      responses:
+        200:
+          description: OK
+          schema:
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/definitions/MiniProfile'
+                  
+  /users/register:
+    post:
+      tags:
+        - Users
+      description: |
+         Registration of a new user
+      security:
+        - oauth:
+          - basic
+      parameters:
+        - in: body
+          name: body
+          description: Created user object
+          required: true
+          schema:
+            $ref: "#/definitions/User"
+      responses:
+        405:
+          description: Invalid input
+          schema:
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/definitions/errorModel'
+        200:
+          description: Successful operation
+          
+  /users/{user-id}/edit:
+    parameters:
+      - $ref: '#/parameters/user-id'
+    put:
+      tags:
+        - Users
+      description: |
+         Edit an existing user
+      security:
+        - oauth:
+          - basic
+      
+      responses:
+        405:
+          description: Validation exception
+          schema:
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/definitions/errorModel'
+        200:
+          description: Successful operation
+          
+  /users/{user-id}/delete:
+    parameters:
+      - $ref: '#/parameters/user-id'
+    delete:
+      tags:
+        - Users
+      description: |
+         Delete an user
+      security:
+        - oauth:
+          - basic
+     
+      responses:
+        405:
+          description: Validation exception
+          schema:
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/definitions/errorModel'
+        200:
+          description: Successful operation
+          
+  /users/{user-id}/relationship:
+    parameters:
+      - $ref: '#/parameters/user-id'
+      
+    post:
+      tags:
+        - Relationships
+      description: |
+        Modify the relationship between the current user and the target user.
+      security:
+        - oauth:
+          - relationships
+      parameters:
+        - name: action
+          in: body
+          description: One of follow/unfollow.
+          schema:
+            type: string
+            enum:
+              - follow
+              - unfollow
+
+      responses:
+        200:
+          description: OK
+          schema:
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/definitions/MiniProfile'
+          
+  /establishment/searchByName:
+    
+    get:
+      security:
+        - key: []
+        - oauth:
+          - basic
+      tags:
+        - Establishment
+      description: Get basic information about an establishment.
+      parameters:
+      
+        - in: query
+          name: name
+          description: Created establishment object
+          required: true
+          type: string
+          
+      responses:
+        405:
+          description: Validation exception
+          schema:
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/definitions/errorModel'
+        404:
+          description: Establishment not found
+          schema:
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/definitions/errorModel'
+        400:
+          description: Invalid ID supplied
+          schema:
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/definitions/errorModel'
+        200:
+          description: The establishment object
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/Establishment'
+                
+  /establishment/register:
+    post:
+      tags:
+        - Establishment
+      description: |
+         Registration of a new establishment
+      security:
+        - oauth:
+          - basic
+      parameters:
+        - in: body
+          name: body
+          description: Created user object
+          required: true
+          schema:
+            $ref: "#/definitions/Establishment"
+      responses:
+        405:
+          description: Invalid input
+          schema:
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/definitions/errorModel'
+        200:
+          description: Successful operation
+          
+  /establishment/{establishment-id}/edit:
+    parameters:
+      - $ref: '#/parameters/establishment-id'
+    put:
+      tags:
+        - Establishment
+      description: |
+         Edition of a establishment
+      security:
+        - oauth:
+          - basic
+      
+      responses:
+        405:
+          description: Validation exception
+          schema:
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/definitions/errorModel'
+        200:
+          description: Successful operation
+        
+          
+  /establishment/{establishment-id}/delete:
+    parameters:
+      - $ref: '#/parameters/establishment-id'
+    delete:
+      tags:
+        - Establishment
+      description: |
+         Remotion of a user
+      security:
+        - oauth:
+          - basic
+     
+      responses:
+        405:
+          description: Validation exception
+          schema:
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/definitions/errorModel'
+        200:
+          description: Successful operation  
+          
+  /establishment/{establishment-id}/search:
+    parameters:
+      - $ref: '#/parameters/establishment-id'
+    get:
+      tags:
+        - Establishment
+      description: Search for a establishment by name.
+      parameters:
+       
+        - name: comments
+          in: query
+          description: List of comments leaved by users.
+          type: integer
+      responses:
+        405:
+          description: Validation exception
+          schema:
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/definitions/errorModel'
+        404:
+          description: Establishment not found
+          schema:
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/definitions/errorModel'
+        400:
+          description: Invalid ID supplied
+          schema:
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/definitions/errorModel'
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/definitions/Establishment'
+   
+  /establishment/{establishment-id}/location:
+    parameters:
+      - $ref: '#/parameters/establishment-id'
+    get:
+      tags:
+        - Location
+        - Establishment
+      description: Search for a location by geographic coordinate.
+      parameters:
+        - name: distance
+          in: query
+          description: Default is 1000m (distance=1000), max distance is 5000.
+          type: integer
+        - name: lat
+          in: query
+          description: |
+            latitude of the center search coordinate. If used, lng is required.
+          type: number
+
+        - name: lng
+          in: query
+          description: |
+            longitude of the center search coordinate. If used, lat is required.
+          type: number
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  $ref: '#/definitions/Establishment'
+                  
+  /establishment/{establishment-id}/classification:
+    parameters:
+      - name: establishment-id
+        in: path
+        description: Establishment ID
+        type: integer
+        required: true
+    get:
+      tags:
+        - Classification
+        - Establishment
+      description: |
+        Get a list of recent comments on a establishment object.
+      responses:
+        200:
+          description: OK
+          schema:
+            properties:
+              meta:
+                properties:
+                  code:
+                    type: number
+              data:
+                type: array
+                items:
+                  $ref: '#/definitions/Classification'
+                  
+  /establishment/{establishment-id}/comments:
+    parameters:
+      - name: establishment-id
+        in: path
+        description: Establishment ID
+        type: integer
+        required: true
+    get:
+      tags:
+        - Comments
+        - Establishment
+      description: |
+        Get a list of recent comments on a establishment object.
+      responses:
+        200:
+          description: OK
+          schema:
+            properties:
+              meta:
+                properties:
+                  code:
+                    type: number
+              data:
+                type: array
+                items:
+                  $ref: '#/definitions/Comment'
+    post:
+      tags:
+        - Comments
+        - Establishment
+      description: |
+        Create a comment on a media object with the following rules:
+        * The total length of the comment cannot exceed 300 characters.
+        * The comment cannot contain more than 1 URL.
+        * The comment cannot consist of all capital letters.
+      security:
+        - oauth:
+            - comments
+      parameters:
+        - name: TEXT
+          description: |
+            Text to post as a comment on the establishment object as specified in
+            establishment-id.
+          in: body
+          schema:
+            type: number
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              meta:
+                properties:
+                  code:
+                    type: number
+              data:
+                type: object
+    delete:
+      tags:
+        - Comments
+        - Establishment
+      description: |
+        Remove a comment on the authenticated establishment object.
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              meta:
+                properties:
+                  code:
+                    type: number
+              data:
+                type: object
+ 
+  
+
+################################################################################
+#                                 Definitions                                  #
+################################################################################
+definitions:
+  User:
+    type: object
+    properties:
+      id:
+        type: integer
+      username:
+        type: string
+      full_name:
+        type: string
+      profile_picture:
+        type: string
+      website:
+        type: string
+      email:
+        type: string
+      password:
+        type: string
+      phone:
+        type: string
+      userStatus:
+        type: integer
+        format: int32
+        description: User Status
+      counts:
+        type: object
+        properties:
+          follows:
+            type: integer
+          follwed_by:
+            type: integer
+ 
+  Establishment:
+    type: object
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      adress:
+        type: string
+      totalVacancies:
+        type: integer
+      FreeVacancies:
+        type: integer
+      latitude:
+        type: number
+      longitude:
+        type: number
+        
+  Comment:
+    type: object
+    properties:
+      id:
+        type: string
+      created_time:
+        type: string
+      text:
+        type: string
+      from:
+        $ref: '#/definitions/MiniProfile'
+        
+  Classification:
+    type: object
+    properties:
+      id:
+        type: string
+      record_time:
+        type: string
+      stars:
+        type: integer
+      from:
+        $ref: '#/definitions/MiniProfile'
+  
+  
+  MiniProfile:
+    type: object
+    description: A shorter version of User for search array
+    properties:
+      user_name:
+        type: string
+      full_name:
+        type: string
+      id:
+        type: integer
+      profile_picture:
+        type: string
+  errorModel:
+    type: object
+    required:
+      - code
+      - message
+    properties:
+      code:
+        type: integer
+        format: int
+      message:
+        type: string
