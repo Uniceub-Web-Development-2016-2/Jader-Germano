@@ -80,11 +80,11 @@
             <div class="row">
 
                 <!-- content -->
-                <div class="col-md-12">
+                <div class="col-md-12" style="padding: 30px">
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="page-header bootstrap-admin-content-title">
-                                <h1>Event System</h1>
+                                <h1>Auto Parking</h1>
                             </div>
                         </div>
                     </div>
@@ -128,7 +128,7 @@
                         <div class="col-md-12">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <div class="text-muted bootstrap-admin-box-title">Available events</div>
+                                    <div class="text-muted bootstrap-admin-box-title">Available Stablishments</div>
                                 </div>
                                 <div>
                                     <?php

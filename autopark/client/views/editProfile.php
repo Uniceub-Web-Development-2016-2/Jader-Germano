@@ -168,10 +168,10 @@
         </div>
         
         <div class="text-center">
-            <form  action="atualizar.html" method="get">
+            <form  action="update.php" method="get">
                 <button  type="submit"   class="btn btn-info"  data-dismiss="modal"> <i class="fa fa-pencil"></i>  Salvar</button>
 
-                <button href="./view/profile.php" class="btn btn-info" data-dismiss="modal">Voltar</button>
+               <a type="button" href="./profile.php" class="btn btn-info" data-dismiss="modal">Voltar</a>
             </form>
         </div>
          

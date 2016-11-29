@@ -158,7 +158,7 @@
         <div class="text-center">
             <form  action="editProfile.php" method="get">
                 <button  type="submit"  class="btn btn-info"  data-dismiss="modal"> <i class="fa fa-pencil"></i>  Editar</button>
-             <button href="./views/home.php" class="btn btn-info" data-dismiss="modal">Voltar</button>
+             <a type="button" href="./home.php" class="btn btn-info" data-dismiss="modal">Voltar</a>
                
             </form>
            
