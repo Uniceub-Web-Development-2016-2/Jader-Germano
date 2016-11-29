@@ -18,6 +18,7 @@ if($_POST["email"] != null && $_POST["password"] != null){
  		$_SESSION["email"] = $array["EA_EMAIL_ADRESS_USER"];
  		$_SESSION["birthdate"] = $array["BI_BIRTHDATE"];
  		$_SESSION["phone"] = $array["PH_PHONE_USER"];
+ 		$_SESSION["password"] = $array["PW_PASSWORD_USER"];
  		$_SESSION["status"] = $array["ST_STATUS_USER"];
  		
 

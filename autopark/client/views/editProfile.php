@@ -3,6 +3,7 @@
 ?>  
 <!DOCTYPE html>
 <html lang="en">
+<form  action="update.php" method="post">
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -76,6 +77,7 @@
                 </div>
             </div><!-- /.container -->
         </nav>
+        
 <div class="row">
 
     <div class="col-sm-12 form-group">
@@ -110,7 +112,7 @@
 
                     <i class="fa fa-user"></i> 
                     <label class="control-label label-wrap-detail"> Nome</label>
-                    <imput class="form-control" type="text" required>
+                    <imput id="name" type="name" name="name" class="form-control" type="text" required>
                     <?php   
                     echo "    {$_SESSION["name"]}";
                     ?>
@@ -121,11 +123,22 @@
 
                 <div class="list-group-item">
 
+                    <i class="fa fa-suitcase"></i> Password
+
+                     <imput id="password" type="password" name="password"class="form-control" type="text" required>
+                    <?php   
+                    echo "    {$_SESSION["password"]}";
+                    ?>
+
+                </div>
+                <div class="list-group-item">
+
                     <i class="fa fa-suitcase"></i> User
 
                     
 
                 </div>
+                
 
                 <div class="list-group-item">
 
@@ -139,7 +152,7 @@
 
                     <i class="fa fa-phone"></i> 
                     <label class="control-label label-wrap-detail"> Phone</label>
-                    <imput class="form-control" type="text" required>
+                    <imput id="phone" type="phone" name="phone"class="form-control" class="form-control" type="text" required>
                     <?php   
                     echo " {$_SESSION["phone"]}";
                     ?>
@@ -153,7 +166,7 @@
                       
                     
                     <label class="control-label label-wrap-detail"> E-mail</label>
-                    <imput class="form-control" type="text" required>
+                    <imput id="email" type="email" name="email"class="form-control" class="form-control" type="text" required>
                     <?php   
                     echo "    {$_SESSION["email"]}";
                     ?>
@@ -162,17 +175,17 @@
                    
 
                 </div>
-
+                
             </div>
 
         </div>
         
         <div class="text-center">
-            <form  action="update.php" method="get">
-                <button  type="submit"   class="btn btn-info"  data-dismiss="modal"> <i class="fa fa-pencil"></i>  Salvar</button>
+            
+                <button  type="submit"  class="btn btn-info"  data-dismiss="modal"> <i class="fa fa-pencil"></i>  Salvar</button>
 
                <a type="button" href="./profile.php" class="btn btn-info" data-dismiss="modal">Voltar</a>
-            </form>
+            
         </div>
          
     </div>
@@ -180,6 +193,5 @@
     </div>
 
 </div>
-
-</div>
+</form>
 </html>
