@@ -1,0 +1,65 @@
+<ol class="breadcrumb">
+    <li>
+        <a class="hiperlink" href="javascript:void(0)">Componentes</a>
+    </li>
+    <li class="active">Classificação</li>
+</ol>
+
+<h1>
+    Classificação
+    <small>componente para atribuição de notas</small>
+</h1>
+
+<div class="row">
+
+    <div class="col-md-6">
+
+        <div class="caixa">
+
+            <h5>Nota padrão </h5>
+
+            <div class="form-group">
+
+                <label>Nota: {{registro.nota1}}/5</label>
+
+                <div>
+
+                    <anatel-classificacao ng-model="registro.nota1"></anatel-classificacao>
+
+                </div>
+
+            </div>
+
+            <h5>Nota (máximo 10)</h5>
+
+            <div class="form-group">
+
+                <label>Nota: {{registro.nota2}}/10</label>
+
+                <div>
+
+                    <anatel-classificacao ng-model="registro.nota2" max="10"></anatel-classificacao>
+
+                </div>
+
+            </div>
+
+            <h5>Nota (somente leitura)</h5>
+
+            <div class="form-group">
+
+                <label>Nota: {{registro.nota3}}/5</label>
+
+                <div>
+
+                    <anatel-classificacao ng-model="registro.nota3" readonly="true"></anatel-classificacao>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

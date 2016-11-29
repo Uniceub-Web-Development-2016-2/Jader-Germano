@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="autopark">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Auto Parking</title>
+
+    <!-- inject:css -->
+    <link rel="stylesheet" href="build/css/autopark.vendor.min.css">
+    <link rel="stylesheet" href="build/css/autopark.assets.min.css">
+    <link rel="stylesheet" href="vendor/css/vendor.min.css">
+    <link rel="stylesheet" href="assets/css/assets.min.css">
+    <link rel="import" href="sass/principal.scss">
+    <!-- endinject -->
+
+    <!-- inject:js -->
+    <script src="build/js/autopark.vendor.min.js" defer></script>
+    <script src="build/js/autopark.assets.min.js" defer></script>
+    <script src="vendor/js/vendor.min.js" defer></script>
+    <script src="assets/js/assets.min.js" defer></script>
+    <!-- endinject -->
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700,300" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="ng-cloak">
+
+<div ui-view></div>
+
+<div growl></div>
+
+<div autopark-loader></div>
+
+</body>
+
+</html>

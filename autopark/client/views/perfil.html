@@ -1,0 +1,130 @@
+<?php
+    session_start();
+?>  
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Auto Parking</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+   
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700,300" rel="stylesheet" type="text/css">
+
+    </head>
+<ol class="breadcrumb">
+    <li>
+        <a class="hiperlink" href="javascript:void(0)">Home</a>
+    </li>
+    <li class="active">Perfil</li>
+</ol>
+
+
+<div class="row">
+
+    <div class="col-sm-12 form-group">
+    <?php   
+            echo "<h3>Seja bem-vindo, $_SESSION["name"] </h3>";
+        ?>
+        <div class="col-md-10 form-group">
+        </div>
+    <div class="col-md-10 form-group">
+
+        <div id="perfil">
+
+            <div class="text-center">
+
+                <div class="avatar">
+
+                    <img src="../img/silhueta.svg" >
+
+                    <div class="cover">
+
+                        <i class="fa fa-camera"></i>
+
+                        <span>Alterar foto</span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="list-group">
+
+                <div class="list-group-item">
+
+                    <i class="fa fa-user"></i> John Doe
+
+                    <div class="pull-right">
+                        <i class="fa fa-pencil"></i>
+                    </div>
+
+                </div>
+
+                <div class="list-group-item">
+
+                    <i class="fa fa-suitcase"></i> Diretor de Comunicação
+
+                    <div class="pull-right">
+                        <i class="fa fa-pencil"></i>
+                    </div>
+
+                </div>
+
+                <div class="list-group-item">
+
+                    <i class="fa fa-building"></i> SECOM
+
+                    <div class="pull-right">
+                        <i class="fa fa-pencil"></i>
+                    </div>
+
+                </div>
+
+                <div class="list-group-item">
+
+                    <i class="fa fa-phone"></i> (61) 3443-1235 / (61) 3443-1223
+
+                    <div class="pull-right">
+                        <i class="fa fa-pencil"></i>
+                    </div>
+
+                </div>
+
+                <div class="list-group-item">
+
+                    <i class="fa fa-envelope"></i> john.doe@anatel.com.br
+
+                    <div class="pull-right">
+                        <i class="fa fa-pencil"></i>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    </div>
+
+</div>
+
+</div>
+</html>
