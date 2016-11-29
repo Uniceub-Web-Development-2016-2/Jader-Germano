@@ -1,7 +1,6 @@
 <?php
 session_start();
 include('httpful.phar');
-var_dump($_POST["email"]);
 if($_POST["email"] != null && $_POST["password"] != null){
 	$login_array = array('EA_EMAIL_ADRESS_USER' => $_POST["email"], 'PW_PASSWORD_USER' =>$_POST["password"]);
 	$url = "localhost/autopark/server/TB_USER/login";
@@ -22,9 +21,15 @@ if($_POST["email"] != null && $_POST["password"] != null){
  		$_SESSION["status"] = $array["ST_STATUS_USER"];
  		
 
-		header("Location: views/perfil.html");
+
+		header("Location: views/profile.php");
 	}
-	else
-		header("Location: index.html");
+	else{
+		echo('<script type="text/javascript">
+            alert("Login or password incorrect! Try again");
+           	 window.location.href ="index.html";
+            </script>');
+		
+	}
 }
 ?>
